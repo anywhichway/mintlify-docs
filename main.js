@@ -12,11 +12,17 @@ window.addEventListener('popstate', (event) => {
 });
 console.log('Loaded ',window.location);
 if(!window.watchContent) {
+  let prevLocation;
   window.watchContent = setInterval(() => {
+      const currentLocation = new URL(window.location);
+    if(currentLocation.href==prevLocation?.href) return;
+    debugger;
+    prevLocation = currentLocation;
+    if(currentLocation.pathname=="/introduction") {
       const audioEls= document.querySelectorAll("img.icendant-example");
-      console.log(audioEls)
     audioEls.forEach(el => {
-      if(!el.nextSibilingElement?.tagName==="IFRAME") {
+      
+      if(el.nextSibilingElement?.tagName==IFRAME") return;
         const url = new URL(el.src,"https://raw.githubusercontent.com/anywhichway/mintlify-docs/refs/heads/main/assets/audio/");
       url.pathname = url.pathname.split(".")[0] + ".mp3"
       console.log(url);
@@ -27,6 +33,8 @@ if(!window.watchContent) {
         </iframe>`;
       el.insertAdjacentHTML("afterend",html);
       }
+    }
+      
     });
   },1000)
 }
