@@ -36,3 +36,16 @@ add back to docs.json as an element of navigation tabs
                   ]
                 }
 
+
+add back to API Reference group
+
+,
+          {
+            "group": "Endpoint Examples",
+            "pages": [
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/delete",
+              "api-reference/endpoint/webhook"
+            ]
+          }
