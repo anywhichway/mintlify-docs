@@ -21,7 +21,7 @@ if(!window.watchContent) {
     if(currentLocation.pathname=="/introduction") {
       const audioEls= document.querySelectorAll("img.icendant-example");
     audioEls.forEach(el => {
-      if(el.nextElementSibling?.tagName==IFRAME") return;
+      if(el.nextElementSibling?.tagName=="IFRAME") return;
         const url = new URL(el.src,"https://raw.githubusercontent.com/anywhichway/mintlify-docs/refs/heads/main/assets/audio/");
       url.pathname = url.pathname.split(".")[0] + ".mp3"
       console.log(url);
