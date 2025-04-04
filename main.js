@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded",event => {
   console.log(event);
-  setTimeout(() => {
+})
+console.log('Loaded ',window.location);
+setTimeout(() => {
+  console.log("Running timeout...")
     const audioEls= document.querySelectorAll("img");
     console.log(audioEls)
   audioEls.forEach(el => {
@@ -15,5 +18,3 @@ document.addEventListener("DOMContentLoaded",event => {
   });
   el.insertAdjacentHTML("afterend",html);
   },2000)
-})
-console.log('Loaded ',window.location)
