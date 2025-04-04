@@ -69,14 +69,18 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
         "href": "mailto:hi@mintlify.com"
+      },
+      {
+        "label": "Privacy Policy",
+        "href": "./privacy.mdx"
       }
     ],
     "primary": {
