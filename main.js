@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded",event => {
   console.log(event);
-  //const poweredByEl = document.querySelector('a[href*="poweredBy"]');
-  //if(poweredByEl) poweredByEl.style.display = "none";
   const audioEls= document.querySelectorAll("img");
   audioEls.forEach(el => {
     const url = new URL(el.src,"https://raw.githubusercontent.com/anywhichway/mintlify-docs/refs/heads/main/assets/audio/");
