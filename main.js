@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded",event => {
   console.log(event);
-  const audioEls= document.querySelectorAll("img");
+  setTimeout(() => {
+    const audioEls= document.querySelectorAll("img");
+    console.log(audioEls)
   audioEls.forEach(el => {
     const url = new URL(el.src,"https://raw.githubusercontent.com/anywhichway/mintlify-docs/refs/heads/main/assets/audio/");
     url.pathname = url.pathname.split(".")[0] + ".mp3"
@@ -12,5 +14,6 @@ document.addEventListener("DOMContentLoaded",event => {
       </iframe>`
   });
   el.insertAdjacentHTML("afterend",html);
+  },2000)
 })
 console.log('Loaded ',window.location)
