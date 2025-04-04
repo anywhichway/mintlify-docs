@@ -62,7 +62,7 @@
       "anchors": [
         {
           "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
+          "href": "./empathy-api-design",
           "icon": "book-open-cover"
         }
       ]
@@ -80,7 +80,7 @@
       },
       {
         "label": "Privacy Policy",
-        "href": "./privacy.mdx"
+        "href": "./privacy"
       }
     ],
     "primary": {
