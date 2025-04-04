@@ -23,16 +23,30 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Documentation",
+            "pages": [
+              "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Endpoint Examples",
+            "pages": [
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/delete",
+              "api-reference/endpoint/webhook"
+            ]
+          }
+        ]
       }
     ],
     "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "./empathy-api-design",
-          "icon": "book-open-cover"
-        }
-      ]
+      
     }
   },
   "logo": {
@@ -44,10 +58,6 @@
       {
         "label": "Support",
         "href": "mailto:hi@mintlify.com"
-      },
-      {
-        "label": "Privacy Policy",
-        "href": "./privacy"
       }
     ],
     "primary": {
