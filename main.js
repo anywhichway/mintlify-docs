@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded",event => {
   console.log(event);
 })
 console.log('Loaded ',window.location);
-setTimeout(() => {
-  console.log("Running timeout...")
+//setTimeout(() => {
+  //console.log("Running timeout...")
     const audioEls= document.querySelectorAll("img");
     console.log(audioEls)
   audioEls.forEach(el => {
@@ -17,4 +17,4 @@ setTimeout(() => {
       </iframe>`
   });
   el.insertAdjacentHTML("afterend",html);
-  },2000)
+ // },2000)
