@@ -17,9 +17,7 @@
             "group": "About",
             "pages": [
               "introduction",
-              "empathy",
-              "author",
-              "chat"
+              "empathy"
             ]
           }
         ]
