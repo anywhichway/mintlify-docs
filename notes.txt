@@ -35,3 +35,4 @@ add back to docs.json as an element of navigation tabs
                     "essentials/reusable-snippets"
                   ]
                 }
+
