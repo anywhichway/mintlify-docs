@@ -1,6 +1,15 @@
 document.addEventListener("DOMContentLoaded",event => {
   console.log(event);
 })
+window.addEventListener('urlchange', () => {
+  console.log('URL changed:', window.location.href);
+});
+window.addEventListener('hashchange', (event) => {
+  console.log('Hash changed:', window.location.hash);
+});
+window.addEventListener('popstate', (event) => {
+  console.log('State changed:', window.location.hash);
+});
 console.log('Loaded ',window.location);
 //setTimeout(() => {
   //console.log("Running timeout...")
@@ -14,7 +23,8 @@ console.log('Loaded ',window.location);
         width="300" 
         height="60" 
         frameborder="0">
-      </iframe>`
+      </iframe>`;
+    el.insertAdjacentHTML("afterend",html);
   });
-  el.insertAdjacentHTML("afterend",html);
+  
  // },2000)
