@@ -12,11 +12,14 @@
     "tabs": [
       {
         "tab": "About",
-        "pages": [
-          "introduction",
-          "empathy"
-        ],
         "groups": [
+          {
+            "group": "Products",
+            "pages": [
+              "introduction",
+              "empathy"
+            ]
+          },
           {
             "group": "Legal",
             "pages": [
