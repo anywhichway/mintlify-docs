@@ -59,7 +59,7 @@
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://icendant.com/empathy"
+      "href": "https://icendant.com/dashboard"
     }
   },
   "footer": {
