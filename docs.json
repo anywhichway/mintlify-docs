@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "iCendant",
-  "decription": "Empathetic text, images, speech, and text-to-speech",
+  "decription": "Emotionally nuanced text, images, speech, and text-to-speech",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -18,7 +18,8 @@
             "group": "Products",
             "pages": [
               "introduction",
-              "empathy"
+              "empathy",
+              "speech"
             ]
           },
           {
@@ -36,7 +37,7 @@
           {
             "group": "API Documentation",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/empathy/introduction"
             ]
           }
         ]
