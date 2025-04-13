@@ -3,10 +3,10 @@ if(!window.watchContent) {
     window.watchContent = setInterval(() => {
         const currentLocation = new URL(window.location);
         if(currentLocation.href==prevLocation?.href) return;
-        debugger;
         prevLocation = currentLocation;
         if(["/speech","/empathy","/introduction"].some(page => currentLocation.pathname.includes(page))) {
             const audioEls= document.querySelectorAll(".icendant-example");
+            debugger;
             audioEls.forEach(el => {
                 if(el.nextElementSibling?.tagName=="IFRAME") return;
                 const url = new URL(el.src);
