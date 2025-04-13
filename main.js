@@ -6,7 +6,7 @@ if(!window.watchContent) {
         debugger;
         prevLocation = currentLocation;
         if(["/speech","/empathy","/introduction"].some(page => currentLocation.pathname.includes(page))) {
-            const audioEls= document.querySelectorAll("img.icendant-example");
+            const audioEls= document.querySelectorAll(".icendant-example");
             audioEls.forEach(el => {
                 if(el.nextElementSibling?.tagName=="IFRAME") return;
                 const url = new URL(el.src);
