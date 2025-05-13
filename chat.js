@@ -12,7 +12,8 @@ setTimeout( () => {
         document.body.appendChild(chat);
         chat.shadowRoot.addEventListener("click", (e) => {
             setTimeout(() => {
-                chat.shadowRoot.querySelector('[title="Attach file"]').style.display = "none";
+                const attachEl = chat.shadowRoot.querySelector('[title="Attach file"]');
+                if(attachEl) attachEl.style.display = "none";
             },250);
         });
     }
