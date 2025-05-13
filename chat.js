@@ -10,12 +10,9 @@ setTimeout( () => {
         chat.setAttribute("project-id", "4d74e764-1999-4c19-887b-a2aa814c91ee");
         chat.setAttribute("workspace-id", "6645e1bc-6b95-4955-a79f-573a0cb9f27b");
         document.body.appendChild(chat);
-        chat.shadowRoot.addEventListener("click", (e) => {
-            setTimeout(() => {
-                const attachEl = chat.shadowRoot.querySelector('[title="Attach file"]');
-                if(attachEl) attachEl.style.display = "none";
-            },250);
-        });
+        const style = document.createElement("style");
+        style.innerText = '[title="Attach file"] { display: "none"; }';
+        chat.shadowRoot.appendChild(style);
     }
     // <messagebird-chat project-id="4d74e764-1999-4c19-887b-a2aa814c91ee" workspace-id="6645e1bc-6b95-4955-a79f-573a0cb9f27b"></messagebird-chat>
 },2000);
