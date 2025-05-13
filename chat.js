@@ -4,4 +4,11 @@ script.setAttribute("defer", "");
 script.setAttribute("type","module");
 script.setAttribute("src","https://embeddables.p.mbirdcdn.net/v1/web-components.es.js");
 head.appendChild(script);
+document.addEventListener("DOMContentLoaded", () => {
+    const chat = document.createElement("messagebird-chat");
+    chat.setAttribute("project-id", "4d74e764-1999-4c19-887b-a2aa814c91ee");
+    chat.setAttribute("workspace-id", "6645e1bc-6b95-4955-a79f-573a0cb9f27b");
+    document.body.appendChild(chat);
+    // <messagebird-chat project-id="4d74e764-1999-4c19-887b-a2aa814c91ee" workspace-id="6645e1bc-6b95-4955-a79f-573a0cb9f27b"></messagebird-chat>
+})
 
