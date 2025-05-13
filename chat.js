@@ -12,7 +12,7 @@ setTimeout( () => {
         document.body.appendChild(chat);
         debugger;
         const style = document.createElement("style");
-        style.innerText = '[title="Attach file"] { display: "none"; }';
+        style.innerText = '[title="Attach file"] { display: none; }';
         setTimeout(() => chat.shadowRoot.appendChild(style),250);
     }
     // <messagebird-chat project-id="4d74e764-1999-4c19-887b-a2aa814c91ee" workspace-id="6645e1bc-6b95-4955-a79f-573a0cb9f27b"></messagebird-chat>
