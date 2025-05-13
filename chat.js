@@ -11,7 +11,9 @@ setTimeout( () => {
         chat.setAttribute("workspace-id", "6645e1bc-6b95-4955-a79f-573a0cb9f27b");
         document.body.appendChild(chat);
         chat.shadowRoot.addEventListener("click", (e) => {
-            e.currentTarget.querySelector('[title="Attach file"]').style.display = "none";
+            setTimeout(() => {
+                e.currentTarget.querySelector('[title="Attach file"]').style.display = "none";
+            },250);
         });
     }
     // <messagebird-chat project-id="4d74e764-1999-4c19-887b-a2aa814c91ee" workspace-id="6645e1bc-6b95-4955-a79f-573a0cb9f27b"></messagebird-chat>
