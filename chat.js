@@ -7,18 +7,20 @@ head.appendChild(script);
 setTimeout( () => {
     if(window.location.pathname.endsWith("/chat")) {
         const chat = document.createElement("messagebird-chat");
-        const shadowRoot = chat.shadowRoot;
-        const originalDispatchEvent = shadowRoot.dispatchEvent;
-        shadowRoot.dispatchEvent = function(event) {
-            console.log(`Event dispatched: ${event.type}`);
-            return originalDispatchEvent.call(this, event);
-        };
         chat.setAttribute("project-id", "4d74e764-1999-4c19-887b-a2aa814c91ee");
         chat.setAttribute("workspace-id", "6645e1bc-6b95-4955-a79f-573a0cb9f27b");
         document.body.appendChild(chat);
         const style = document.createElement("style");
         style.innerText = '[title="Attach file"] { display: none; }';
-        setTimeout(() => shadowRoot.appendChild(style),250);
+        setTimeout(() => {
+            const shadowRoot = chat.shadowRoot;
+            const originalDispatchEvent = shadowRoot.dispatchEvent;
+            shadowRoot.dispatchEvent = function(event) {
+                console.log(`Event dispatched: ${event.type}`);
+                return originalDispatchEvent.call(this, event);
+            };
+            shadowRoot.appendChild(style)
+        },250);
     }
     // <messagebird-chat project-id="4d74e764-1999-4c19-887b-a2aa814c91ee" workspace-id="6645e1bc-6b95-4955-a79f-573a0cb9f27b"></messagebird-chat>
 },2000);
