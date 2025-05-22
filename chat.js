@@ -13,15 +13,26 @@ setTimeout( () => {
         const style = document.createElement("style");
         style.innerText = '[title="Attach file"] { display: none; }';
         setTimeout(() => {
-            const shadowRoot = chat.shadowRoot;
-            const originalDispatchEvent = shadowRoot.dispatchEvent;
-            shadowRoot.dispatchEvent = function(event) {
-                console.log(`Event dispatched: ${event.type}`);
-                return originalDispatchEvent.call(this, event);
-            };
             shadowRoot.appendChild(style)
         },250);
     }
     // <messagebird-chat project-id="4d74e764-1999-4c19-887b-a2aa814c91ee" workspace-id="6645e1bc-6b95-4955-a79f-573a0cb9f27b"></messagebird-chat>
 },2000);
+
+(() => {
+    const orginalFetch = window.fetch;
+    window.fetch = async function(...args) {
+        const url = new URL(args[0]);
+        if(url.hostname==="api.bird.com") {
+            console.log(args);
+            const response = orginalFetch(...args);
+            const clonedResponse = response.clone();
+            clonedResponse.text().then(text => {
+                console.log(url.href,text)
+            })
+            return response;
+        }
+        return orginalFetch(...args);
+    }
+})()
 
