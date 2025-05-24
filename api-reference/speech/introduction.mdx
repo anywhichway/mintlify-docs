@@ -1,0 +1,412 @@
+---
+title: 'iCendant Speech'
+description: 'Speech API General Usage'
+---
+
+# iCendant Speech API - General Usage Documentation
+
+## Overview
+
+The iCendant Speech API converts text messages into natural-sounding speech with emotional nuance and prosodic control. 
+The API processes text through an AI system that adds emotional context, pacing, and natural pauses before generating high-quality audio output.
+
+## Endpoint
+
+```
+POST https://icendant.com/api/speech/v1-0-0/generate
+```
+
+## Authentication
+
+Both API key and Account ID are required in headers for all requests:
+
+```
+Authorization: Bearer YOUR_API_KEY
+X-Account: YOUR_ACCOUNT_ID
+```
+
+## Basic Usage
+
+```json
+{
+  "messages": [
+    {
+      "role": "user", 
+      "content": [
+        {
+          "type": "text",
+          "text": "Welcome to our meditation session. Take a deep breath and relax."
+        }
+      ]
+    }
+  ],
+  "voice_options": {
+    "voice_id": "ignacio",
+    "async": "await"
+  }
+}
+```
+
+### Notes
+
+- The `async` parameter can be set to "stream", "await", or "poll". See the Processing Modes section below for detailed information on when to use each option.
+- The voice_id can be set to any of the available voices. The default is "ignacio", but you can choose from over 500 voices. See the [Speech dashboard](https://icendant.com/dashboard) for a full list of available voices with sample audio. The id is just the name in lower case.
+- If you send a message history only the last 4 items in history impact the emotional processing. This allows the AI to maintain context without overwhelming it with too much information. Hence, don't send more than 4, you are wasting bandwidth!
+
+## Request Structure
+
+### Required Fields
+
+- **messages** (array): Array of message objects containing the text to convert to speech
+- **voice_options** (object): Voice configuration options (required)
+
+### Message Object
+
+- **role** (string): Must be "user" or "assistant"
+- **content** (array): Array of content objects
+
+### Content Object
+
+- **type** (string): Must be "text"
+- **text** (string): The text content to convert to speech
+
+### Optional Fields
+
+#### voice_options (required)
+
+- **voice_id** (string): Voice identifier (default: "ignacio")
+- **async** (string): Processing mode - "await", "poll", or "stream" (default: "await")
+- **persona** (string): Optional persona context to influence emotional processing
+
+#### parameters
+
+- **temperature** (number): Controls randomness in AI processing (0.0-1.0, default: 0.7)
+
+## Processing Modes
+
+### Await Mode (Default)
+Returns complete audio data in the response.
+
+**Pros:**
+- Simple to implement
+
+**Cons:**
+- Takes 2-20 seconds depending on content size
+- Client must wait for entire processing to complete
+- Not suitable for real-time applications
+
+**Best for:** Simple applications where waiting for complete audio is acceptable. Or is situation where content is being pre-generated.
+
+```json
+{
+  "voice_options": {
+    "async": "await"
+  }
+}
+```
+
+### Stream Mode (Recommended)
+Returns audio data as a streaming response that typically begins within ~2 seconds.
+
+**Pros:**
+- Responsive
+- Best user experience for real-time applications
+- Almost immediate audio playback possible
+- Lowest perceived latency
+
+**Cons:**
+- Requires specialized client-side coding to handle streaming audio
+- More complex implementation
+
+**Best for:** Real-time applications, voice assistants, interactive experiences where immediate audio feedback is important.
+
+**Note:** This is often the best option but not the default because it requires more specialized coding for API consumers to handle streaming responses properly.
+
+```json
+{
+  "voice_options": {
+    "async": "stream"
+  }
+}
+```
+
+### Poll Mode
+Returns a URL to poll for the completed audio.
+
+**Pros:**
+- Extremely fast initial response time
+- Non-blocking for client applications
+- Useful when user may not need the audio
+
+**Cons:**
+- Requires additional polling requests
+- More complex implementation
+- Best suited for shorter content
+- Poll mode results are only available for 60 minutes even though charges will have accrued
+
+**Best for:** Text less than 1024 characters when extremely fast response time is needed and there's a chance the end user may choose not to access the audio.
+
+```json
+{
+  "voice_options": {
+    "async": "poll"
+  }
+}
+```
+
+## Response Formats
+
+### Successful Response (Await Mode)
+
+```json
+{
+  "completion": {
+    "role": "assistant",
+    "content": [
+      {
+        "type": "audio",
+        "encoding": "base64",
+        "data": "base64_encoded_audio_data"
+      }
+    ]
+  }
+}
+```
+
+### Successful Response (Poll Mode)
+
+```json
+{
+  "completion": {
+    "role": "assistant", 
+    "content": [
+      {
+        "type": "audio",
+        "url": "/audio_id"
+      }
+    ]
+  }
+}
+```
+
+## Advanced Features
+
+### Persona Context
+
+The `persona` parameter provides additional context that influences emotional processing. The AI prioritizes persona-based emotional cues over the literal content of the text, understanding that humans don't always say what they mean.
+
+```json
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "I'm fine, really."
+        }
+      ]
+    }
+  ],
+  "voice_options": {
+    "voice_id": "ignacio",
+    "async": "stream",
+    "persona": "The user just received disappointing news and is trying to appear strong but is actually feeling sad and needs comfort"
+  }
+}
+```
+
+In this example, even though the text says "I'm fine," the persona context will cause the AI to process the speech with underlying emotional nuance that reflects the user's actual emotional state.
+
+### Emotional Intelligence
+
+The API automatically analyzes text and adds appropriate emotional context:
+
+- **Meditation/Breathing**: Uses calm, relaxed, warm, or sad emotions
+- **General Content**: Can use angry, cheerful, surprised, assertive, energetic, direct, fearful, or bright emotions
+
+### Prosodic Control
+
+The system automatically varies:
+- **Rate**: Speech speed (-15% to +8%)
+- **Volume**: Loudness (-25% to +25%)
+- **Pauses**: Context-aware breaks at punctuation and natural pause points
+
+### Natural Punctuation Handling
+
+- Commas: 0.25s pause
+- Colons/Semicolons: 0.5s pause
+- Periods: 0.75s pause
+- Ellipses: 1.0s pause
+
+## Validation Mode
+
+Test your request format without generating audio:
+
+```json
+{
+  "validate_only": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text", 
+          "text": "Test message"
+        }
+      ]
+    }
+  ],
+  "voice_options": {
+    "voice_id": "ignacio",
+    "async": "await"
+  }
+}
+```
+
+Returns:
+```json
+{
+  "id": "valid_12345",
+  "created_at": "2024-01-15T10:30:00Z",
+  "status": "valid",
+  "message": "The request format is valid.",
+  "validated_request": { /* processed request */ }
+}
+```
+
+## Error Handling
+
+### Common Error Responses
+
+#### Invalid JSON
+```json
+{
+  "error": {
+    "code": "invalid_json",
+    "message": "Request body contains invalid JSON",
+    "type": "validation_error"
+  }
+}
+```
+
+#### Missing Messages
+```json
+{
+  "error": {
+    "code": "invalid_request_error", 
+    "message": "Messages must be a non-empty array",
+    "param": "messages",
+    "type": "validation_error"
+  }
+}
+```
+
+#### Authentication Error
+```json
+{
+  "error": {
+    "code": "unauthorized",
+    "message": "Invalid or missing API key",
+    "type": "authentication_error"
+  }
+}
+```
+
+## Response Headers, Rate Limiting & Credits
+
+The API uses a credit-based system where usage is calculated based on character count:
+- Cost: 0.008 credits per 1,000 characters
+- Credit balance is tracked per account
+- Balance information is returned in response headers
+- 
+Each credit is worth 0.001 USD, hence:
+- 1,000 characters cost 0.008 USD
+- credit balance of 50,000 credits is worth $50 USD
+
+There is currently no rate limiting, this will change in the future. Please behave responsibly and do not abuse the API.
+
+High utilization is often an indication of a run-away process, your requests for audio cost us money to process. We will not
+refund credits for run-away processes that consume large amounts of credits.
+
+### Headers
+
+x-icendant-account-credit-balance: ACCOUNT_CREDIT_BALANCE
+x-icendant-account-id: YOUR_ACCOUNT_ID
+x-icendant-response-id: UUID of the response
+x-icendant-voice-character-count: CHARACTER_COUNT
+
+
+## Best Practices
+
+1. **Text Length**: Keep individual messages reasonably sized for optimal processing
+2. **Error Handling**: Always check for error responses and handle them appropriately
+3. **Validation**: Use `validate_only: true` to test request format during development
+4. **Voice Selection**: Choose appropriate voice_id for your use case
+5. **Processing Mode**: Use "stream" for real-time applications, "await" for simple use cases, "poll" for long-running processes
+
+## Example Use Cases
+
+### Meditation App
+```json
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Close your eyes... breathe in slowly... hold for three seconds... and breathe out."
+        }
+      ]
+    }
+  ],
+  "voice_options": {
+    "voice_id": "calm_voice",
+    "async": "stream"
+  }
+}
+```
+
+### Interactive Assistant with Persona Context
+```json
+{
+  "messages": [
+    {
+      "role": "user", 
+      "content": [
+        {
+          "type": "text",
+          "text": "Great question! Let me explain how this works."
+        }
+      ]
+    }
+  ],
+  "voice_options": {
+    "voice_id": "ignacio",
+    "async": "stream",
+    "persona": "An enthusiastic teacher helping a curious student who is excited to learn"
+  }
+}
+```
+
+### Accessibility Tool
+```json
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text", 
+          "text": "The weather today is sunny with a high of 75 degrees. Perfect for a walk in the park!"
+        }
+      ]
+    }
+  ],
+  "voice_options": {
+    "voice_id": "ignacio",
+    "async": "await"
+  }
+}
+```
