@@ -38,7 +38,8 @@
           {
             "group": "API Documentation",
             "pages": [
-              "api-reference/empathy/introduction"
+              "api-reference/empathy/introduction",
+              "api-reference/speech/introduction"
             ]
           }
         ]
