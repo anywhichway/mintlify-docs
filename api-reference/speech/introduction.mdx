@@ -7,7 +7,7 @@ description: 'Speech API General Usage'
 
 ## Overview
 
-The iCendant Speech API converts text messages into natural-sounding speech with emotional nuance and prosodic control. 
+The iCendant Speech API converts text messages into emotionally nuanced, natural-sounding speech.
 The API processes text through an AI system that adds emotional context, pacing, and natural pauses before generating high-quality audio output.
 
 ## Endpoint
@@ -18,7 +18,7 @@ POST https://icendant.com/api/speech/v1-0-0/generate
 
 ## Authentication
 
-Both API key and Account ID are required in headers for all requests:
+Both the API key and Account ID are required in headers for all requests:
 
 ```
 Authorization: Bearer YOUR_API_KEY
@@ -105,6 +105,23 @@ Returns complete audio data in the response.
 }
 ```
 
+### Successful Response (Await Mode)
+
+```json
+{
+  "completion": {
+    "role": "assistant",
+    "content": [
+      {
+        "type": "audio",
+        "encoding": "base64",
+        "data": "base64_encoded_audio_data"
+      }
+    ]
+  }
+}
+```
+
 ### Stream Mode (Recommended)
 Returns audio data as a streaming response that typically begins within ~2 seconds.
 
@@ -130,6 +147,13 @@ Returns audio data as a streaming response that typically begins within ~2 secon
 }
 ```
 
+### Successful Response (Stream Mode)
+
+```mp3
+audio stream body
+```
+
+
 ### Poll Mode
 Returns a URL to poll for the completed audio.
 
@@ -154,31 +178,12 @@ Returns a URL to poll for the completed audio.
 }
 ```
 
-## Response Formats
-
-### Successful Response (Await Mode)
-
-```json
-{
-  "completion": {
-    "role": "assistant",
-    "content": [
-      {
-        "type": "audio",
-        "encoding": "base64",
-        "data": "base64_encoded_audio_data"
-      }
-    ]
-  }
-}
-```
-
 ### Successful Response (Poll Mode)
 
 ```json
 {
   "completion": {
-    "role": "assistant", 
+    "role": "assistant",
     "content": [
       {
         "type": "audio",
@@ -319,7 +324,7 @@ The API uses a credit-based system where usage is calculated based on character 
 - Cost: 0.008 credits per 1,000 characters
 - Credit balance is tracked per account
 - Balance information is returned in response headers
-- 
+
 Each credit is worth 0.001 USD, hence:
 - 1,000 characters cost 0.008 USD
 - credit balance of 50,000 credits is worth $50 USD
@@ -329,13 +334,14 @@ There is currently no rate limiting, this will change in the future. Please beha
 High utilization is often an indication of a run-away process, your requests for audio cost us money to process. We will not
 refund credits for run-away processes that consume large amounts of credits.
 
+Debiting your account is one of the last steps in our processing. If your API call fails, it is unlikely that you will be debited for the request. If you are debited, please contact support@icendant.com.
+
 ### Headers
 
 x-icendant-account-credit-balance: ACCOUNT_CREDIT_BALANCE
 x-icendant-account-id: YOUR_ACCOUNT_ID
 x-icendant-response-id: UUID of the response
 x-icendant-voice-character-count: CHARACTER_COUNT
-
 
 ## Best Practices
 
