@@ -221,6 +221,32 @@ The `persona` parameter provides additional context that influences emotional pr
 
 In this example, even though the text says "I'm fine," the persona context will cause the AI to process the speech with underlying emotional nuance that reflects the user's actual emotional state.
 
+Or, adjust the baseline rate or volume:
+
+```json
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "I'm fine, really."
+        }
+      ]
+    }
+  ],
+  "voice_options": {
+    "voice_id": "ignacio",
+    "async": "stream",
+    "persona": "Speaker has baseline rate +10% and baseline volume -10%."
+  }
+}
+```
+
+This will add or subtract from the baseline rate and volume of the voice based on iCendant Speech inference, allowing for more nuanced control over how the speech is delivered.
+After all some people do speak faster or slower, and some people do speak louder or softer than others. We can't always rely on the text or the averages of the LLM even if the LLM has some variability built in.
+
 ### Emotional Intelligence
 
 The API automatically analyzes text and adds appropriate emotional context:
